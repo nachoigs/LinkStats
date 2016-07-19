@@ -17,11 +17,13 @@ public class Main {
 				+ "phonetic-first-name,phonetic-last-name,formatted-phonetic-name,headline,location,industry,"
 				+ "current-share,num-connections,num-connections-capped,summary,specialties,positions,picture-url,"
 				+ "picture-urls::(original),site-standard-profile-request,api-standard-profile-request,public-profile-url)";
+	private static String apikey = "77afmdyf72tu3o";
+	private static String apisecret = "I1HczwvphpPNBmjO";	
 	
 	public static void main(String[] args) throws IOException {
 		final OAuth10aService service = new ServiceBuilder()
-                .apiKey("your client id")
-                .apiSecret("your client secret")
+                .apiKey(apikey)
+                .apiSecret(apisecret)
                 .build(LinkedInApi.instance());
         final Scanner in = new Scanner(System.in);
 
