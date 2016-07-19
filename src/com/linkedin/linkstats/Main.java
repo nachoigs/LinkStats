@@ -13,7 +13,10 @@ import java.io.IOException;
 
 public class Main {
 	private static final String PROTECTED_RESOURCE_URL 
-		= "http://api.linkedin.com/v1/people/~/connections:(id,last-name)";
+		= "http://api.linkedin.com/v1/people/~/connections:(id,first-name,last-name,maiden-name,formatted-name,"
+				+ "phonetic-first-name,phonetic-last-name,formatted-phonetic-name,headline,location,industry,"
+				+ "current-share,num-connections,num-connections-capped,summary,specialties,positions,picture-url,"
+				+ "picture-urls::(original),site-standard-profile-request,api-standard-profile-request,public-profile-url)";
 	
 	public static void main(String[] args) throws IOException {
 		final OAuth10aService service = new ServiceBuilder()
