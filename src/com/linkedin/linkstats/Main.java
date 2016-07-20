@@ -12,11 +12,12 @@ import com.github.scribejava.core.oauth.OAuth10aService;
 import java.io.IOException;
 
 public class Main {
-	private static final String PROTECTED_RESOURCE_URL 
-		= "http://api.linkedin.com/v1/people/~/connections:(id,first-name,last-name,maiden-name,formatted-name,"
+	private static String options= "connections:(id,first-name,last-name,maiden-name,formatted-name,"
 				+ "phonetic-first-name,phonetic-last-name,formatted-phonetic-name,headline,location,industry,"
 				+ "current-share,num-connections,num-connections-capped,summary,specialties,positions,picture-url,"
 				+ "picture-urls::(original),site-standard-profile-request,api-standard-profile-request,public-profile-url)";
+	
+	private static final String PROTECTED_RESOURCE_URL = "https://api.linkedin.com/v1/people/~:(%s)";
 	private static String apikey = "77afmdyf72tu3o";
 	private static String apisecret = "I1HczwvphpPNBmjO";	
 	
@@ -51,17 +52,41 @@ public class Main {
                 + ", 'rawResponse'='" + accessToken.getRawResponse() + "')");
         System.out.println();
 
-        // Now let's go and ask for a protected resource!
+//        // Now let's go and ask for a protected resource!
+//        System.out.println("Now we're going to access a protected resource...");
+//        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, service);
+//        service.signRequest(accessToken, request);
+//        final Response response = request.send();
+//        System.out.println("Got it! Lets see what we found...");
+//        System.out.println();
+//        System.out.println(response.getBody());
+//
+//        System.out.println();
+//        System.out.println("Thats it man! Go and build something awesome with ScribeJava! :)");
+        
         System.out.println("Now we're going to access a protected resource...");
-        final OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL, service);
-        service.signRequest(accessToken, request);
-        final Response response = request.send();
-        System.out.println("Got it! Lets see what we found...");
-        System.out.println();
-        System.out.println(response.getBody());
+        while (true) {
+            System.out.println("Paste profile query for fetch (firstName, lastName, etc) or 'exit' to stop example");
+            System.out.print(">>");
+            final String query = in.nextLine();
+            System.out.println();
 
-        System.out.println();
-        System.out.println("Thats it man! Go and build something awesome with ScribeJava! :)");		
+            if ("exit".equals(query)) {
+                break;
+            }
+
+            final OAuthRequest request = new OAuthRequest(Verb.GET, String.format(PROTECTED_RESOURCE_URL, query),
+                    service);
+            request.addHeader("x-li-format", "json");
+            request.addHeader("Accept-Language", "ru-RU");
+            service.signRequest(accessToken, request);
+            final Response response = request.send();
+            System.out.println();
+            System.out.println(response.getCode());
+            System.out.println(response.getBody());
+
+            System.out.println();
+        }
 	}
 
 }
